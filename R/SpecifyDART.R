@@ -155,7 +155,7 @@ SpecifyDART <- function(ID, mask, response,
     names(topo_list) <- DART::GetDefaultTopoVars()
     out_DART@topographic_variables <- topo_list
   } else {
-    topo_list <- topo_variables
+    out_DART@topographic_variables <- topo_variables
   }
 
   missing_topo <- sapply(out_DART@topographic_variables, file.exists)

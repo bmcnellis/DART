@@ -60,6 +60,8 @@ calculations. Must be > 0 and <= 1, where 1 is all pixels}
 \item{\code{n_topographic_matches}}{Number of topographic matches to search for.
 Optional. See details.}
 
+\item{\code{topographic_variables}}{Character vector of filenames for the topographic layers.}
+
 \item{\code{n_cores}}{Number of cores to use for parallelization. Optional.}
 
 \item{\code{NLCD_filter}}{Numeric of NLCD codes to filter by. Optional.}

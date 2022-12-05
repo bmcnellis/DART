@@ -27,6 +27,7 @@
 #' @slot buffer_radius Radius in meters of target-reference buffer zone
 #' @slot n_topographic_matches Number of topographic matches to search for.
 #'                             Optional. See details.
+#' @slot topographic_variables Character vector of filenames for the topographic layers.
 #' @slot n_cores Number of cores to use for parallelization. Optional.
 #' @slot NLCD_filter Numeric of NLCD codes to filter by. Optional.
 #'
