@@ -8,10 +8,9 @@ SpecifyDART(
   ID,
   mask,
   response,
-  PSCS,
-  EC,
   other_masks = NULL,
   other_controls = list(),
+  topo_variables = list(),
   target_masks = list(),
   years = c(1984:2018),
   spatial_directory = getwd(),
@@ -33,9 +32,13 @@ BEM: maybe make it so ID is a column name in the SPDF???}
 
 \item{mask}{Study area mask. SpatVector.}
 
-\item{response}{List of response variable filenames}
+\item{response}{List of response variable filenames.}
 
 \item{other_masks}{Character vector of other mask filenames to apply}
+
+\item{other_controls}{List of other control variable filenames.}
+
+\item{topo_variables}{List of topographic variable filenames.}
 
 \item{years}{Years that response variable is desired}
 
@@ -61,8 +64,6 @@ Required if use_synthetic_control is TRUE}
 
 \item{n_matches}{Number of topographic matches to search for.
 Optional. See details.}
-
-\item{controls}{Character vector specifying files of controls}
 }
 \description{
 This is a wrapper function that initializes a `DART-class` object using parameters

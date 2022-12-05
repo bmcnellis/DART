@@ -93,7 +93,7 @@ DART <- setClass(
     other_controls = 'list',
 
     # Topographic variable slots
-    topographic_variables = 'list',
+    topographic_variables = 'character',
 
     # Landsat variable slots
     landsat_variables = 'list',

@@ -23,7 +23,8 @@ GetRastData <- function(DART_obj, expanded_target) {
   #     Import the rasters:
   masks <- if (length(DART_obj@other_masks) > 0) terra::rast(lapply(DART_obj@other_masks, terra::rast))
   conts <- if (length(DART_obj@other_controls) > 0) terra::rast(lapply(DART_obj@other_controls, terra::rast))
-  topos <- terra::rast(lapply(DART_obj@topographic_variables, terra::rast))
+  #topos <- terra::rast(lapply(DART_obj@topographic_variables, terra::rast))
+  topos <- terra::rast(DART_obj@topographic_variables)
   #     Stack, crop, and mask:
   rast_list <- list(masks, conts, topos)
   rast_data <- terra::rast(rast_list[lengths(rast_list) != 0])

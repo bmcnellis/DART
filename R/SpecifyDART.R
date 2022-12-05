@@ -8,8 +8,10 @@
 #' @param ID Identification/name of this DART object. See details.
 #'           BEM: maybe make it so ID is a column name in the SPDF???
 #' @param mask Study area mask. SpatVector.
-#' @param other_masks Character vector of other mask filenames to apply
 #' @param response List of response variable filenames.
+#' @param other_masks Character vector of other mask filenames to apply
+#' @param other_controls List of other control variable filenames.
+#' @param topo_variables List of topographic variable filenames.
 #'
 #' @param years Years that response variable is desired
 #' @param spatial_directory Directory path containing spatial files.
@@ -26,11 +28,7 @@
 #'                             Optional. See details.
 #' @param SC_intervention Year of synthetic control intervention.
 #'                        Required if use_synthetic_control is TRUE
-#' @param controls Character vector specifying files of controls
 #' @param fresh if TRUE, remove all files in results and intermediate directory before run
-#'
-#'
-#' @param response List of response variable filenames
 #'
 #' @details
 #'
@@ -41,14 +39,16 @@
 NULL
 #' @rdname SpecifyDART
 #' @export
-SpecifyDART <- function(ID, mask, response, PSCS, EC,
-                        other_masks = NULL, other_controls = list(),
+SpecifyDART <- function(ID, mask, response,
+                        other_masks = NULL, other_controls = list(), topo_variables = list(),
                         target_masks = list(),
                         years = c(1984:2018),
                         spatial_directory = getwd(), results_directory = getwd(), intermediate_directory = getwd(),
                         use_synthetic_control = F, SC_intervention = NULL,
                         super_pixel = T, fresh = F,
                         search_radius = 2000, target_radius = numeric(), buffer_radius = 90, n_matches = 100) {
+
+  out_DART <- new('DART')
 
   # Directory checks
   if (!dir.exists(spatial_directory)) {
@@ -90,6 +90,14 @@ SpecifyDART <- function(ID, mask, response, PSCS, EC,
     stop('response variables must be a named vector - no empty names allowed')
   }
 
+  # Check to see if other mask files exist
+  out_DART@other_controls <- other_controls
+  missing_other <- sapply(out_DART@other_controls, file.exists)
+  if (!(all(missing_other))) {
+    message('cant find additional control variables: ')
+    print(names(missing_other[which(missing_other == 'FALSE')]))
+  }
+
   # Check to see if the synthetic control parameters were set correctly
   if (!is.logical(use_synthetic_control)) {
     stop('use_synthetic_control must be TRUE/FALSE')
@@ -117,7 +125,6 @@ SpecifyDART <- function(ID, mask, response, PSCS, EC,
   # testing scripts.
 
   # Available slots:
-  out_DART <- new('DART')
   out_DART@ID <- ID
   out_DART@years <- years
   out_DART@spatial_directory <- spatial_directory
@@ -133,7 +140,7 @@ SpecifyDART <- function(ID, mask, response, PSCS, EC,
   out_DART@CI_init_index <- which(years == SC_intervention)
   out_DART@target_masks <- target_masks
   out_DART@super_pixel <- super_pixel
-  out_DART@other_controls <- other_controls
+  #out_DART@other_controls <- other_controls
 
   # Defaults/not implemented yet:
   out_DART@target_prop <- 0.1
@@ -142,16 +149,19 @@ SpecifyDART <- function(ID, mask, response, PSCS, EC,
   # Response variables
 
   # Topo variables:
-  topo_vars <- file.path(spatial_directory, paste0(DART::GetDefaultTopoVars(), '.tif'))
-  topo_list <- as.list(topo_vars)
-  names(topo_list) <- DART::GetDefaultTopoVars()
-  out_DART@topographic_variables <- topo_list
+  if (length(topo_variables) == 0) {
+    #topo_list <- as.list(file.path(spatial_directory, paste0(DART::GetDefaultTopoVars(), '.tif')))
+    topo_list <- file.path(spatial_directory, paste0(DART::GetDefaultTopoVars(), '.tif'))
+    names(topo_list) <- DART::GetDefaultTopoVars()
+    out_DART@topographic_variables <- topo_list
+  } else {
+    topo_list <- topo_variables
+  }
 
   missing_topo <- sapply(out_DART@topographic_variables, file.exists)
   if (!(all(missing_topo))) {
-    message('topographic variables missing from directory: ')
+    message('cant find topographic variables: ')
     print(names(missing_topo[which(missing_topo == 'FALSE')]))
-
   }
 
   stopifnot(validObject(out_DART))
