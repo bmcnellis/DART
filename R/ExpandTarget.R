@@ -6,7 +6,7 @@
 #'
 #' @details NA
 #'
-#' @rdname DART_helpers
+#' @rdname ExpandTarget
 #' @export
 ExpandTarget <- function(DART_obj, target, to) {
 
