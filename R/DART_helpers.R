@@ -157,9 +157,8 @@ save_diagnostic_plots <- function(DART_obj, rast_obj, pdf_fname) {
 save_intermediates <- function(DART_obj, rast_obj, grd_fname) {
 
   if (DART_obj@save_intermediates) {
-    # Need to use a native raster format - GeoTIFF doesnt save the stack layer names
     f0 <- file.path(DART_obj@intermediate_directory, grd_fname)
-    terra::writeRaster(rast_obj, filename = f0, format = "raster", overwrite = T)
+    terra::writeRaster(rast_obj, filename = f0,overwrite = T)
   }
 
 }

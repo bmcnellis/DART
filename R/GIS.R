@@ -33,7 +33,7 @@ GetRastData <- function(DART_obj, expanded_target) {
 
   # Save and return:
   DART::save_diagnostic_plots(DART_obj,  rast_data, 'DART_RASTER_DATA')
-  DART::save_intermediates(DART_obj,  rast_data, 'DART_RASTER_DATA')
+  DART::save_intermediates(DART_obj,  rast_data, 'DART_RASTER_DATA.tif')
   return( rast_data)
 
 }
@@ -82,9 +82,8 @@ ApplyMasks <- function(DART_obj, input_raster_stack) {
   }
 
   if (DART_obj@save_intermediates) {
-    # Need to use a native raster format - GeoTIFF doesnt save the stack layer names
-    f0 <- file.path(DART_obj@intermediate_directory, 'DART_MASKED_DATA.grd')
-    raster::writeRaster(input_raster_stack, filename = f0, format = "raster", overwrite = T)
+    f0 <- file.path(DART_obj@intermediate_directory, 'DART_MASKED_DATA.tif')
+    raster::writeRaster(input_raster_stack, filename = f0,overwrite = T)
     cat('\n wrote masked data OK')
   }
 
