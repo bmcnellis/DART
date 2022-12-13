@@ -110,7 +110,7 @@ MakeCandidates <- function(DART_obj, raster_data, target) {
     edge_masked <- SubsamplePixels(edge_masked, DART_obj@seed, DART_obj@ref_prop, DART_obj@n_topographic_matches)
   }
 
-  if (sum(values(edge_masked))== 0) { #SC - tried to adjust for terra format, not sure if that is the issue
+  if (sum(values(edge_masked), na.rm=T)== 0) { #SC - tried to adjust for terra format, not sure if that is the issue
     stop('No non-NA candidate pixels in masked rasters (i.e., every pixel masked)')
   }
 
