@@ -102,7 +102,7 @@ MakeCandidates <- function(DART_obj, raster_data, target) {
 
   # Edge-effects should be masked when looking for reference pixels
   cat('\n masking for edge-effects using buffer radius')
-  edge_mask <- terra::buffer(target, width = DART_obj@buffer_radius)
+  edge_mask <- terra::buffer(target[['target']], width = DART_obj@buffer_radius)
   edge_masked <- terra::mask(raster_data, edge_mask, inverse = TRUE)
 
   if (DART_obj@ref_prop < 1) {
