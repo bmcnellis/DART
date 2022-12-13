@@ -97,7 +97,7 @@ ApplyMasks <- function(DART_obj, input_raster_stack) {
 MakeCandidates <- function(DART_obj, raster_data, target) {
 
   cat('\n masking outside search radius')
-  expanded_target <- ExpandTarget(DART_obj, target, to = 'reference')
+  expanded_target <- ExpandTarget(DART_obj, target[['target']], to = 'reference')
   raster_data <- raster::mask(raster_data, expanded_target)
 
   # Edge-effects should be masked when looking for reference pixels
@@ -110,7 +110,7 @@ MakeCandidates <- function(DART_obj, raster_data, target) {
     edge_masked <- SubsamplePixels(edge_masked, DART_obj@seed, DART_obj@ref_prop, DART_obj@n_topographic_matches)
   }
 
-  if (sum(values(edge_masked))== 0) {
+  if (sum(values(edge_masked))== 0) { #SC - tried to adjust for terra format, not sure if that is the issue
     stop('No non-NA candidate pixels in masked rasters (i.e., every pixel masked)')
   }
 
