@@ -74,7 +74,7 @@ CalcDART <- function(DART_obj, x, y = NULL, nControl = 100) {
 
     # Make target data
     itarg <- GetTarget(DART_obj, x = xi, y = y)
-    ifl1 <- paste0('DART_MASKED_TARGET_', iID, '.grd')
+    ifl1 <- paste0('DART_MASKED_TARGET_', iID, '.tif')
     ifl1 <- file.path(DART_obj@intermediate_directory, ifl1)
 
     if (DART_obj@resume && file.exists(ifl1)) {
