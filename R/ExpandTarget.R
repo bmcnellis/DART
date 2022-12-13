@@ -25,7 +25,7 @@ ExpandTarget <- function(DART_obj, target, to) {
   }
 
   prime_proj <- terra::crs(DART_obj@mask)
-  expanded_target <- terra::buffer(target, width = ref_radius)
+  expanded_target <- terra::buffer(target['target'], width = ref_radius)
   expanded_target <- terra::project(expanded_target, prime_proj)
   expanded_target$rastval <- 1
 
