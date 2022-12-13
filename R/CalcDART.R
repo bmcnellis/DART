@@ -63,7 +63,7 @@ CalcDART <- function(DART_obj, x, y = NULL, nControl = 100) {
     ref_data <- raster::stack(ref_fl)
   } else {
     cat('\n** generating reference data')
-    ref_data <- MakeCandidates(DART_obj, masked_data, target[['target']])
+    ref_data <- MakeCandidates(DART_obj, masked_data, target)
   }
 
   results <- data.frame(stringsAsFactors = F)
