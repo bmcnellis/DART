@@ -102,8 +102,8 @@ MakeCandidates <- function(DART_obj, raster_data, target) {
 
   # Edge-effects should be masked when looking for reference pixels
   cat('\n masking for edge-effects using buffer radius')
-  edge_mask <- raster::buffer(target, width = DART_obj@buffer_radius)
-  edge_masked <- raster::mask(raster_data, edge_mask, inverse = TRUE)
+  edge_mask <- terra::buffer(target, width = DART_obj@buffer_radius)
+  edge_masked <- terra::mask(raster_data, edge_mask, inverse = TRUE)
 
   if (DART_obj@ref_prop < 1) {
     cat('\n sub-sampling reference pixels, polygon')
@@ -125,7 +125,7 @@ MakeCandidates <- function(DART_obj, raster_data, target) {
   if (DART_obj@save_intermediates) {
     # Need to use a native raster format - GeoTIFF doesnt save the stack layer names
     f0 <- file.path(DART_obj@intermediate_directory, 'DART_MASKED_REF.tif')
-    raster::writeRaster(edge_masked, filename = f0,  overwrite = T)
+    terra::writeRaster(edge_masked, filename = f0,  overwrite = T)
     cat('\n wrote ref area data OK')
   }
 
