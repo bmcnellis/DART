@@ -11,7 +11,7 @@ NULL
 #' @export
 GetRastData <- function(DART_obj, expanded_target) {
 
-  rast_fl <- file.path(DART_obj@intermediate_directory, 'DART_RASTER_DATA.grd')
+  rast_fl <- file.path(DART_obj@intermediate_directory, 'DART_RASTER_DATA.tif')
 
   # If the file already exists and 'resume' flag is set, return existing data
   if (DART_obj@resume && file.exists(rast_fl)) {
@@ -124,8 +124,8 @@ MakeCandidates <- function(DART_obj, raster_data, target) {
 
   if (DART_obj@save_intermediates) {
     # Need to use a native raster format - GeoTIFF doesnt save the stack layer names
-    f0 <- file.path(DART_obj@intermediate_directory, 'DART_MASKED_REF.grd')
-    raster::writeRaster(edge_masked, filename = f0, format = "raster", overwrite = T)
+    f0 <- file.path(DART_obj@intermediate_directory, 'DART_MASKED_REF.tif')
+    raster::writeRaster(edge_masked, filename = f0,  overwrite = T)
     cat('\n wrote ref area data OK')
   }
 
@@ -146,10 +146,10 @@ MakeTargetData <- function(DART_obj, masked_data, target, i0) {
   target_data <- raster::mask(masked_data, target)
 
   if (DART_obj@save_intermediates) {
-    # Need to use a native raster format - GeoTIFF doesnt save the stack layer names
-    f0 <- paste0('DART_MASKED_TARGET_', i0, '.grd')
+
+    f0 <- paste0('DART_MASKED_TARGET_', i0, '.tif')
     f1 <- file.path(DART_obj@intermediate_directory, f0)
-    raster::writeRaster(target_data, filename = f1, format = "raster", overwrite = T)
+    raster::writeRaster(target_data, filename = f1,  overwrite = T)
     cat('\n wrote target data OK, polygon: ', i0)
   }
 
