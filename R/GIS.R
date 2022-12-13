@@ -110,7 +110,7 @@ MakeCandidates <- function(DART_obj, raster_data, target) {
     edge_masked <- SubsamplePixels(edge_masked, DART_obj@seed, DART_obj@ref_prop, DART_obj@n_topographic_matches)
   }
 
-  if (all(cellStats(edge_masked, 'sum') == 0)) {
+  if (all(terra::sum(edge_masked) == 0)) {
     stop('No non-NA candidate pixels in masked rasters (i.e., every pixel masked)')
   }
 
