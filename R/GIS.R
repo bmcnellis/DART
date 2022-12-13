@@ -97,7 +97,7 @@ ApplyMasks <- function(DART_obj, input_raster_stack) {
 MakeCandidates <- function(DART_obj, raster_data, target) {
 
   cat('\n masking outside search radius')
-  expanded_target <- ExpandTarget(DART_obj, target[['target']], to = 'reference')
+  expanded_target <- ExpandTarget(DART_obj, target, to = 'reference')
   raster_data <- raster::mask(raster_data, expanded_target)
 
   # Edge-effects should be masked when looking for reference pixels
