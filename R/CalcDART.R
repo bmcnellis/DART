@@ -68,7 +68,7 @@ CalcDART <- function(DART_obj, x, y = NULL, nControl = 100) {
 
   results <- data.frame(stringsAsFactors = F)
 
-  for (i in seq(nrow(x@data))) {
+  for (i in seq(nrow(x))) {
     xi <- x[i, ]
     iID <- DART_obj@ID[i]
 
