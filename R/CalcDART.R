@@ -82,7 +82,7 @@ CalcDART <- function(DART_obj, x, y = NULL, nControl = 100) {
       itreat <- raster::stack(ifl1)
     } else {
       cat('\n** generating target data, polygon: ', iID)
-      itreat <- MakeTargetData(DART_obj, masked_data, itarg, i0 = iID)
+      itreat <- MakeTargetData(DART_obj, masked_data, itarg$target, i0 = iID)
     }
 
     DART::save_diagnostic_plots(DART_obj, itreat, paste0('DART_TARGET_DATA', iID))
