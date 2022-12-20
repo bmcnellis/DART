@@ -88,18 +88,18 @@ CalcDART <- function(DART_obj, x, y = NULL, nControl = 100) {
     DART::save_diagnostic_plots(DART_obj, itreat, paste0('DART_TARGET_DATA', iID))
 
     # Get control subset for ith polygon
-    ifl2 <- paste0('DART_CONTROL_REF_', iID, '.grd')
-    ifl2 <- file.path(DART_obj@intermediate_directory, ifl2)
-    if (DART_obj@resume && file.exists(ifl2)) {
-      cat('\n** subset data exists; resuming using intermediate, polygon: ', iID)
-      iref <- raster::stack(ifl2)
-    } else {
-      cat('\n** crop reference to target study area, polygon: ', iID)
-      iref_area <- ExpandTarget(DART_obj, itarg, to = 'reference')
-      iref <- raster::mask(ref_data, iref_area)
-      cat('\n** subset target data, polygon: ', iID)
-      iref <- ControlSubset(DART_obj, itreat, iref, i0 = iID)
-    }
+  #  ifl2 <- paste0('DART_CONTROL_REF_', iID, '.grd')
+  #  ifl2 <- file.path(DART_obj@intermediate_directory, ifl2)
+  #  if (DART_obj@resume && file.exists(ifl2)) {
+   #   cat('\n** subset data exists; resuming using intermediate, polygon: ', iID)
+   #   iref <- raster::stack(ifl2)
+  #  } else {
+  #    cat('\n** crop reference to target study area, polygon: ', iID)
+   ##   iref_area <- ExpandTarget(DART_obj, itarg, to = 'reference')
+    #  iref <- raster::mask(ref_data, iref_area)
+   #   cat('\n** subset target data, polygon: ', iID)
+    #  iref <- ControlSubset(DART_obj, itreat, iref, i0 = iID)
+   # }
 
     # Make a master mask for the treatments
     # TODO: should probably do this with everything, up above?
