@@ -102,30 +102,30 @@ TopoSubset <- function(DART_obj, treatment, reference, i0) {
     #if (DART_obj@exact_PSCS_match) {
     #  idat2 <- dat2[which(dat2[[PSCS_name]] %in% idat1[[PSCS_name]]), ]
    # } else {
-   #   idat2 <- dat2
+     idat2 <- dat2
    # }
     # Subset the reference pixels for EC
     #idat2 <- idat2[which(idat2[[EC_name]] >= (idat1[[EC_name]] * DART_obj@EC_min)), ]
    # idat2 <- idat2[which(idat2[[EC_name]] <= (idat1[[EC_name]] * DART_obj@EC_max)), ]
 
     # Subset the reference pixels for other controls
-    for (j in seq_along(DART_obj@other_controls)) {
+   # for (j in seq_along(DART_obj@other_controls)) {
       # Loop through the names of the other control variables...
-      jj <- names(DART_obj@other_controls)[j]
+   #   jj <- names(DART_obj@other_controls)[j]
       # Find the relevant value...
-      jval <- idat1[, jj]
+   #   jval <- idat1[, jj]
 
       # And match it exactly. Needs some other functionality for min/max
       # or whatever.
-      idat2 <- idat2[which(idat2[, jj] == jval), ]
-    }
+   #   idat2 <- idat2[which(idat2[, jj] == jval), ]
+   # }
 
     # Drop control columns
     #idat1 <- idat1[, -which(colnames(idat1) %in% c(PSCS_name, EC_name))]
     #idat2 <- idat2[, -which(colnames(idat2) %in% c(PSCS_name, EC_name))]
     if (length(DART_obj@other_controls) > 0) {
-      idat1 <- idat1[, -which(colnames(idat1) %in% names(DART_obj@other_controls))]
-      idat2 <- idat2[, -which(colnames(idat2) %in% names(DART_obj@other_controls))]
+      idat1 <- idat1[, -which(colnames(idat1) %in% other_names)]
+      idat2 <- idat2[, -which(colnames(idat2) %in%  other_names)]
     }
 
     if (any(nrow(idat1) == 0, nrow(idat2) == 0)) {
@@ -214,7 +214,7 @@ TopoSubset <- function(DART_obj, treatment, reference, i0) {
   # able to extract for CI
   # These are the pixel IDs in `itreat_sub`, which here is `treatment`
   # to pass to CI, set the column names of the `gower` object to be the treatment pixel IDs
-  pix_ID <- raster::cellFromXY(treatment, apply(t(do.call('cbind', strsplit(rownames(dat1), ', '))), c(1, 2), as.numeric))
+  pix_ID <- cellFromXY(treatment, apply(t(do.call('cbind', strsplit(rownames(dat1), ', '))), c(1, 2), as.numeric))
   # pix_ID is the wrong length if there was NULLs returned by gower's, need to correct
   if (length(drop_coord_index) > 0) pix_ID <- pix_ID[-drop_coord_index]
   toposim <- lapply(toposim, function(x) structure(x, dimnames = list(NULL, pix_ID)))
