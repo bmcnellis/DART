@@ -27,7 +27,7 @@ TopoSubset <- function(DART_obj, treatment, reference, i0) {
   cat('\n\tgetting topographic subset, polygon: ', i0)
 
   # Get the names for the relevant columns
-  PSCS_name <- tools::file_path_sans_ext(basename(DART_obj@PSCS_control))
+  #PSCS_name <- tools::file_path_sans_ext(basename(DART_obj@PSCS_control))
   EC_name <- tools::file_path_sans_ext(basename(DART_obj@EC_control))
   toponames <- names(DART_obj@topographic_variables)
   other_names <- names(DART_obj@other_controls)

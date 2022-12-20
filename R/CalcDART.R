@@ -142,7 +142,7 @@ CalcDART <- function(DART_obj, x, y = NULL, nControl = 100) {
 
       }
 
-      raster::writeRaster(itreat_sub, filename = ifl4, format = "raster", overwrite = T)
+      raster::writeRaster(itreat_sub, filename = paste0('DART_SUBSAMP_TARGET_', iID, '.tif'), overwrite = T)
       cat('\n\twrote target sub-sample OK, polygon: ', iID)
       DART::save_diagnostic_plots(DART_obj, itreat_sub, paste0('DART_TARGET_SUB', iID))
 

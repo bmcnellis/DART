@@ -49,17 +49,17 @@ SubsamplePixels <- function(stack0, seed, prop, n_gower) {
   nonNA_pix <- numeric()
   stack_out <- raster::stack()
 
-  if (nlayers(stack0) > 1) {
+  if (nlyr(stack0) > 1) {
     layer0 <- stack0[[1]]
   } else {
     layer0 <- stack0
   }
 
-  size0 <- length(!is.na(raster::getValues(layer0)))
+  size0 <- length(terra::values(layer0, na.rm=T))
   prop0 <- round(size0 * prop)
 
-  rast0 <- raster::sampleRandom(x = layer0, size = prop0, na.rm = T, asRaster = T)
-  stack_out <- suppressWarnings(raster::mask(stack0, layer0))
+  rast0 <- terra::spatSample(x = layer0, size = prop0, method="random", replace=F, na.rm = T, as.raster = T)
+  stack_out <- suppressWarnings(mask(stack0, layer0))
 
   return(stack_out)
 }
