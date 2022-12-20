@@ -140,7 +140,7 @@ SpecifyDART <- function(ID, mask, response,
   out_DART@CI_init_index <- which(years == SC_intervention)
   out_DART@target_masks <- target_masks
   out_DART@super_pixel <- super_pixel
-  #out_DART@other_controls <- other_controls
+  out_DART@other_controls <- other_controls
 
   # Defaults/not implemented yet:
   out_DART@target_prop <- 0.1

@@ -95,8 +95,8 @@ CalcDART <- function(DART_obj, x, y = NULL, nControl = 100) {
    #   iref <- raster::stack(ifl2)
   #  } else {
   #    cat('\n** crop reference to target study area, polygon: ', iID)
-   ##   iref_area <- ExpandTarget(DART_obj, itarg, to = 'reference')
-    #  iref <- raster::mask(ref_data, iref_area)
+  iref_area <- ExpandTarget(DART_obj, itarg, to = 'reference')
+   iref <- raster::mask(ref_data, iref_area)
    #   cat('\n** subset target data, polygon: ', iID)
     #  iref <- ControlSubset(DART_obj, itreat, iref, i0 = iID)
    # }

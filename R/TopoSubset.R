@@ -29,21 +29,21 @@ TopoSubset <- function(DART_obj, treatment, reference, i0) {
   # Get the names for the relevant columns
   #PSCS_name <- tools::file_path_sans_ext(basename(DART_obj@PSCS_control))
   #EC_name <- tools::file_path_sans_ext(basename(DART_obj@EC_control))
-  toponames <- names(DART_obj@topographic_variables)
-  other_names <- names(DART_obj@other_controls)
+  toponames <- names(rast(unlist(DART_obj@topographic_variables)))
+  other_names <- names(rast(unlist(DART_obj@other_controls)))
   all_names <- c(toponames, other_names) #PSCS_name, EC_name
 
   # Convert to SPDF for pixel selection
   spdf_trt <- treatment[[all_names]]
-  spdf_trt <- as(spdf_trt, 'SpatialPixelsDataFrame')
+  spdf_trt <- as.data.frame(spdf_trt, xy = T)
   spdf_ref <- reference[[all_names]]
-  spdf_ref <- as(spdf_ref, 'SpatialPixelsDataFrame')
+  spdf_ref <- as.data.frame(spdf_ref,  xy = T)
 
   # Check for missing values in selected pixels. If present, report:
-  spdf_trt_NA <- apply(spdf_trt@data, 1, function(x) sum(is.na(x)))
+  spdf_trt_NA <- apply(spdf_trt, 1, function(x) sum(is.na(x)))
   cat('\n\t\t# of (treatment) topographic pixels with missing values: ', sum(spdf_trt_NA))
   cat('\n\t\t% of (treatment) topographic pixels with missing values: ', round(sum(spdf_trt_NA) / nrow(spdf_trt) * 100))
-  spdf_ref_NA <- apply(spdf_ref@data, 1, function(x) sum(is.na(x)))
+  spdf_ref_NA <- apply(spdf_ref, 1, function(x) sum(is.na(x)))
   cat('\n\t\t# of (reference) topographic pixels with missing values: ', sum(spdf_ref_NA))
   cat('\n\t\t% of (reference) topographic pixels with missing values: ', round(sum(spdf_ref_NA) / nrow(spdf_ref) * 100))
   cat('\n\t\tdropping pixels with missing values')
@@ -51,10 +51,10 @@ TopoSubset <- function(DART_obj, treatment, reference, i0) {
   if (length(which(spdf_ref_NA > 0)) > 0) spdf_ref <- spdf_ref[-which(spdf_ref_NA > 0), ]
 
   cat('\n\t\tpulling pixel data from spatial object')
-  dat1 <- spdf_trt@data
-  rownames(dat1) <- apply(coordinates(spdf_trt), 1, FUN = toString)
-  dat2 <- spdf_ref@data
-  rownames(dat2) <- apply(coordinates(spdf_ref), 1, FUN = toString)
+  dat1 <- spdf_trt[, names(spdf_trt)[!names(spdf_trt)%in%c("x", "y")]]
+  rownames(dat1) <- apply(spdf_trt[, c("x", "y")], 1, FUN = toString)
+  dat2 <- spdf_ref[, names(spdf_ref)[!names(spdf_ref)%in%c("x", "y")]]
+  rownames(dat2) <- apply(spdf_ref[, c("x", "y")], 1, FUN = toString)
 
   if (DART_obj@super_pixel) {
     # Super-pixel method
