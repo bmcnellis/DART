@@ -106,7 +106,7 @@ masterMask <- function(rasters) {
 
   master <- rasters[[1]]
 
-  for (i in 1:nlyr(rasters)){
+  for (i in 1:nlayers(rasters)){
     master <- mask(master, rasters[[i]])
   }
 
